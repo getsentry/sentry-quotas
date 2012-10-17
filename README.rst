@@ -22,7 +22,7 @@ Configure ``SENTRY_QUOTAS`` in your ``sentry.conf.py``:
 
     SENTRY_QUOTAS = {
         'redis': {
-            'hosts' = {
+            'hosts': {
                 # for more information on configuring hosts, see the documentation for the
                 # Nydus python package
                 0: {
@@ -30,7 +30,7 @@ Configure ``SENTRY_QUOTAS`` in your ``sentry.conf.py``:
                     'port': 6379
                 }
             }
-        }
+        },
         'default_events_per_minute': 100,
     }
 
