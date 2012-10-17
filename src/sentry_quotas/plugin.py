@@ -72,15 +72,15 @@ class QuotasPlugin(Plugin):
     def get_events_per_minute(self, project):
         proj_setting = self.get_option('per_minute', project)
         if proj_setting is None:
-            return get_default_events_per_minute()
-        return proj_setting
+            return int(get_default_events_per_minute())
+        return int(proj_setting)
 
     def is_configured(self, project, **kwargs):
         return bool(self.get_events_per_minute(project))
 
     def incr(self, project, client=redis):
         # we store a key per minute
-        key = 'sentry_quotas:%s:%s' % (project.id, int(time.time() % 86400))
+        key = 'sentry_quotas:%s:%s' % (project.id, int(time.time() / 60))
         with client.map() as conn:
             result = conn.incr(key)
             conn.expire(key, 60)
@@ -94,7 +94,7 @@ class QuotasPlugin(Plugin):
             if not quota:
                 return None
 
-            if self.incr(project) >= quota:
+            if self.incr(project) > quota:
                 self.logger.info('Project %r was over quota, event not recorded', project.slug)
                 return False
 
