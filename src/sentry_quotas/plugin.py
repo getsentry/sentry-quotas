@@ -8,6 +8,7 @@ sentry_quotas.plugin
 
 from django import forms
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ugettext_lazy as _
 from nydus.db import create_cluster
 from sentry.plugins import Plugin
@@ -15,6 +16,9 @@ from sentry.plugins import Plugin
 import logging
 import time
 import sentry_quotas
+
+if not getattr(settings, 'SENTRY_QUOTAS', None):
+    raise ImproperlyConfigured('You need to configure SENTRY_QUOTAS')
 
 
 def get_cluster(hosts=None, router='nydus.db.routers.keyvalue.PartitionRouter'):
