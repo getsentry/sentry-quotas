@@ -40,10 +40,15 @@ def get_default_events_per_minute():
     return settings.SENTRY_QUOTAS.get('default_events_per_minute')
 
 
+def get_per_minute_help_text():
+    if get_default_events_per_minute():
+        return _('The maximum events per minute before dropping data (system default is %s).') % get_default_events_per_minute()
+    return _('The maximum events per minute before dropping data.') % get_default_events_per_minute()
+
+
 class QuotasOptionsForm(forms.Form):
     per_minute = forms.CharField(label=_('Events / Minute'),
-        widget=forms.Textarea(attrs={'class': 'span6', 'placeholder': 'e.g. 500'}),
-        help_text=_('The maximum events per minute before dropping data. (system default is %s)', get_default_events_per_minute()))
+        help_text=get_per_minute_help_text())
 
 
 class QuotasPlugin(Plugin):
