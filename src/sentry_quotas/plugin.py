@@ -87,14 +87,19 @@ class QuotasPlugin(Plugin):
 
         return int(result)
 
+    def is_over_quota(self, project):
+        quota = self.get_events_per_minute(project)
+        if not quota:
+            return False
+
+        if self.incr(project) > quota:
+            return True
+
     def has_perm(self, user, perm, *objects, **kwargs):
         if perm == 'create_event':
             project = objects[0]
-            quota = self.get_events_per_minute(project)
-            if not quota:
-                return None
 
-            if self.incr(project) > quota:
+            if self.is_over_quota(project):
                 self.logger.info('Project %r was over quota, event not recorded', project.slug)
                 return False
 
