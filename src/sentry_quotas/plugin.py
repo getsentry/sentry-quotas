@@ -43,7 +43,7 @@ def get_default_events_per_minute():
 def get_per_minute_help_text():
     if get_default_events_per_minute():
         return _('The maximum events per minute before dropping data (system default is %s).') % get_default_events_per_minute()
-    return _('The maximum events per minute before dropping data.') % get_default_events_per_minute()
+    return _('The maximum events per minute before dropping data.')
 
 
 class QuotasOptionsForm(forms.Form):
