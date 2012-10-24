@@ -33,7 +33,7 @@ def get_cluster(hosts=None, router='nydus.db.routers.keyvalue.PartitionRouter'):
         'hosts': hosts,
     })
 
-redis = get_cluster(settings.SENTRY_QUOTAS['redis'])
+redis = get_cluster(**settings.SENTRY_QUOTAS['redis'])
 
 
 def get_default_events_per_minute():
