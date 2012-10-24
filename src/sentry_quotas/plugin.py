@@ -22,9 +22,10 @@ if not getattr(settings, 'SENTRY_QUOTAS', None):
 
 
 def get_cluster(hosts=None, router='nydus.db.routers.keyvalue.PartitionRouter'):
-    hosts = {
-        0: {}  # localhost / default
-    }
+    if hosts is None:
+        hosts = {
+            0: {}  # localhost / default
+        }
 
     return create_cluster({
         'engine': 'nydus.db.backends.redis.Redis',
