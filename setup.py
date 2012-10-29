@@ -22,7 +22,7 @@ install_requires = [
 
 setup(
     name='sentry-quotas',
-    version='0.1.3',
+    version='0.1.4',
     author='David Cramer',
     author_email='dcramer@gmail.com',
     url='http://github.com/getsentry/sentry-quotas',
