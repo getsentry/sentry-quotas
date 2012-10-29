@@ -39,10 +39,10 @@ setup(
     include_package_data=True,
     entry_points={
        'sentry.apps': [
-            'github = sentry_quotas',
+            'quotas = sentry_quotas',
         ],
        'sentry.plugins': [
-            'github = sentry_quotas.plugin:QuotasPlugin'
+            'quotas = sentry_quotas.plugin:QuotasPlugin'
         ],
     },
     classifiers=[
