@@ -12,11 +12,16 @@ from setuptools import setup, find_packages
 
 
 tests_require = [
-    'nose',
+    'exam',
+    'mock',
+    'pytest',
+    'pytest-django',
+    'unittest2',
 ]
 
 install_requires = [
     'nydus',
+    'redis',
     'sentry>=5.0.0',
 ]
 

@@ -79,9 +79,15 @@ class QuotasPlugin(Plugin):
     def is_configured(self, project, **kwargs):
         return bool(self.get_events_per_minute(project))
 
+    def get_key(self, project):
+        return 'sentry_quotas:%s:%s' % (project.id, int(time.time() / 60))
+
+    def get_usage(self, project, client=redis):
+        return int(client.get(self.get_key(project)) or 0)
+
     def incr(self, project, client=redis):
         # we store a key per minute
-        key = 'sentry_quotas:%s:%s' % (project.id, int(time.time() / 60))
+        key = self.get_key(project)
         with client.map() as conn:
             result = conn.incr(key)
             conn.expire(key, 60)
@@ -93,8 +99,7 @@ class QuotasPlugin(Plugin):
         if not quota:
             return False
 
-        if self.incr(project) > quota:
-            return True
+        return self.get_usage(project) > quota
 
     def has_perm(self, user, perm, *objects, **kwargs):
         if perm == 'create_event':
@@ -105,3 +110,6 @@ class QuotasPlugin(Plugin):
                 return False
 
         return None
+
+    def post_process(self, group, event, is_new, is_sample, **kwargs):
+        self.incr(group.project)
