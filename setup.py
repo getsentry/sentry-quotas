@@ -33,7 +33,7 @@ setup(
     url='http://github.com/getsentry/sentry-quotas',
     description='A Sentry extension which add hard limits to projects.',
     long_description=__doc__,
-    license='BSD',
+    license='Apache License 2.0',
     package_dir={'': 'src'},
     packages=find_packages('src'),
     zip_safe=False,
