@@ -6,7 +6,7 @@ sentry-quotas
 An extension for Sentry which allows setting hard quotas.
 
 :copyright: (c) 2012 by the Sentry Team, see AUTHORS for more details.
-:license: BSD, see LICENSE for more details.
+:license: Apache License 2.0, see LICENSE for more details.
 """
 from setuptools import setup, find_packages
 
