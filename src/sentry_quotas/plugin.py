@@ -106,7 +106,7 @@ class QuotasPlugin(Plugin):
             project = objects[0]
 
             if self.is_over_quota(project):
-                self.logger.info('Project %r was over quota, event not recorded', project.slug)
+                self.logger.info('Project %s/%s was over quota, event not recorded', project.team.slug, project.slug)
                 return False
 
         return None
