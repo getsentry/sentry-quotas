@@ -99,7 +99,7 @@ class QuotasPlugin(Plugin):
         if not quota:
             return False
 
-        return self.get_usage(project) > quota
+        return self.incr(project) > quota
 
     def has_perm(self, user, perm, *objects, **kwargs):
         if perm == 'create_event':
@@ -110,6 +110,3 @@ class QuotasPlugin(Plugin):
                 return False
 
         return None
-
-    def post_process(self, group, event, is_new, is_sample, **kwargs):
-        self.incr(group.project)
