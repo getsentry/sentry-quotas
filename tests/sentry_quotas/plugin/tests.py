@@ -19,7 +19,7 @@ class IsOverQuotaTest(BasePluginTest):
     def test_bails_immediately_without_quota(self, incr, get_events_per_minute):
         get_events_per_minute.return_value = None
 
-        result = self.plugin.is_over_quota(self.project)
+        result = self.plugin.is_rate_limited(self.project)
 
         get_events_per_minute.assert_called_once_with(self.project)
         assert not incr.called
@@ -31,7 +31,7 @@ class IsOverQuotaTest(BasePluginTest):
         get_events_per_minute.return_value = 100
         incr.return_value = 101
 
-        result = self.plugin.is_over_quota(self.project)
+        result = self.plugin.is_rate_limited(self.project)
 
         incr.assert_called_once_with(self.project)
         assert result is True
@@ -42,7 +42,7 @@ class IsOverQuotaTest(BasePluginTest):
         get_events_per_minute.return_value = 100
         incr.return_value = 99
 
-        result = self.plugin.is_over_quota(self.project)
+        result = self.plugin.is_rate_limited(self.project)
 
         incr.assert_called_once_with(self.project)
         assert result is False

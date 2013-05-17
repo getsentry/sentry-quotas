@@ -94,7 +94,7 @@ class QuotasPlugin(Plugin):
 
         return int(result)
 
-    def is_over_quota(self, project):
+    def is_rate_limited(self, project):
         quota = self.get_events_per_minute(project)
         if not quota:
             return False
@@ -105,7 +105,7 @@ class QuotasPlugin(Plugin):
         if perm == 'create_event':
             project = objects[0]
 
-            if self.is_over_quota(project):
+            if self.is_rate_limited(project):
                 self.logger.info('Project %s/%s was over quota, event not recorded', project.team.slug, project.slug)
                 return False
 
