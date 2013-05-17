@@ -102,6 +102,8 @@ class QuotasPlugin(Plugin):
         return self.incr(project) > quota
 
     def has_perm(self, user, perm, *objects, **kwargs):
+        if hasattr(Plugin, 'is_rate_limited'):
+            return  # dont process rate limits twice
         if perm == 'create_event':
             project = objects[0]
 
