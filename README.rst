@@ -3,6 +3,8 @@ sentry-quotas
 
 An extension for Sentry which allows setting hard limits.
 
+**This package is no longer maintained and is part of Sentry core.**
+
 Install
 -------
 
